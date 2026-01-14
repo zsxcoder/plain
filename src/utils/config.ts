@@ -2,7 +2,7 @@
  * 首页中显示的打字效果字符串
  * @type {string[]}
  */
-export const typingStrings = ['Luwang', 'Front End Developer', 'Advertising Designer']
+export const typingStrings = ['钟神秀', '学生', '博客写作者']
 
 /**
  * 颜色数组
