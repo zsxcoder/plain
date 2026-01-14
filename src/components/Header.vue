@@ -23,6 +23,11 @@ const links = [
     name: t('nav.friends'),
     link: '/friend',
   },
+  {
+    id: 4,
+    name: t('nav.sponsor'),
+    link: '/sponsor',
+  },
 ]
 
 document.documentElement.dataset.theme = themeStore.curTheme

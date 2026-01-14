@@ -1,0 +1,9 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="300" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <g transform="translate(50, 50)">
+    <rect width="200" height="200" fill="#00a0e9"/>
+    <text x="100" y="100" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">支付宝</text>
+    <text x="100" y="140" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="white">扫码支付</text>
+    <text x="100" y="180" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="white">请替换为实际二维码</text>
+  </g>
+</svg>
