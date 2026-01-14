@@ -48,19 +48,39 @@ export async function getFriends({ page = 1, pageSize = FRIEND_PER_PAGE }) {
 interface Fr {
   body: string
 }
+
 export async function getFriendsByComments() {
   const res = await fetchWithToken(`${BLOG_PREFIX}/issues?state=closed&labels=Friend`)
-  if (!res?.length)
+  if (!Array.isArray(res) || !res.length)
     return []
-  const commentsUrl = res[0].comments_url
-  const friendRes = await fetchWithToken(`${commentsUrl}?page=1&per_page=${FRIEND_PER_PAGE}`)
+
   const friends: Friend[] = []
-  friendRes.forEach((fr: Fr) => {
-    if (isSpecificJSONFormat(fr.body)) {
-      const friend = JSON.parse(fr.body)
-      friends.push(friend)
+
+  // 获取所有带有 "Friend" 标签的 Issue 的评论
+  for (const issue of res) {
+    try {
+      const commentsUrl = issue.comments_url
+      const friendRes = await fetchWithToken(`${commentsUrl}?page=1&per_page=${FRIEND_PER_PAGE}`)
+
+      if (Array.isArray(friendRes)) {
+        friendRes.forEach((fr: Fr) => {
+          if (isSpecificJSONFormat(fr.body)) {
+            try {
+              const friend = JSON.parse(fr.body)
+              friends.push(friend)
+            }
+            catch (error) {
+              console.error('Error parsing friend JSON:', error)
+            }
+          }
+        })
+      }
     }
-  })
+    catch (error) {
+      console.error('Error fetching comments:', error)
+    }
+  }
+
   return friends
 }
 

@@ -15,10 +15,21 @@ const friends: Friend[] = reactive([])
 document.title = `${import.meta.env.V_TITLE} | 友链`
 
 onMounted(async () => {
-  if (friendRepo)
-    Object.assign(friends, await getFriends({}))
-  else
-    Object.assign(friends, await getFriendsByComments())
+  try {
+    if (friendRepo) {
+      const friendData = await getFriends({})
+      if (Array.isArray(friendData))
+        Object.assign(friends, friendData)
+    }
+    else {
+      const friendData = await getFriendsByComments()
+      if (Array.isArray(friendData))
+        Object.assign(friends, friendData)
+    }
+  }
+  catch (error) {
+    console.error('Error fetching friends:', error)
+  }
 })
 
 onUnmounted(() => {
