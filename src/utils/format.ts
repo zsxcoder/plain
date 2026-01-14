@@ -1,7 +1,7 @@
 import fm from 'front-matter'
 
 // 格式化日期
-export function formatDate(date: string) {
+export function formatDate(date: string | number) {
   const dateObj = new Date(date)
   const year = dateObj.getFullYear()
   const month = dateObj.getMonth() + 1

@@ -108,7 +108,7 @@ onUnmounted(() => {
               </div>
               <div class="shuoshuo-meta flex items-center text-xs text-gray-500 dark:text-gray-400">
                 <span class="shuoshuo-time mr-4">
-                  {{ formatDate(item.time.toString()) }}
+                  {{ formatDate(item.time) }}
                 </span>
                 <span class="shuoshuo-views">
                   浏览 {{ item.views }}
