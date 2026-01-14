@@ -28,6 +28,11 @@ const links = [
     name: t('nav.sponsor'),
     link: '/sponsor',
   },
+  {
+    id: 5,
+    name: t('nav.shuoshuo'),
+    link: '/shuoshuo',
+  },
 ]
 
 document.documentElement.dataset.theme = themeStore.curTheme

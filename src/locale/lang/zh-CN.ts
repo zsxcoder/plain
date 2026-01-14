@@ -3,4 +3,5 @@ export default {
   'nav.tags': '标签',
   'nav.friends': '友链',
   'nav.sponsor': '赞助',
+  'nav.shuoshuo': '说说',
 }
