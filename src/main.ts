@@ -21,7 +21,7 @@ app.use(directives)
 // 添加 Vercount 脚本
 if (typeof window !== 'undefined') {
   const script = document.createElement('script')
-  script.src = 'https://v1.vercount.one/p.js'
+  script.src = 'https://events.vercount.one/js'
   script.defer = true
   script.dataset.vercount = 'true'
   document.head.appendChild(script)
