@@ -27,8 +27,14 @@ const FR_PREFIX = `/repos/${USERNAME}/${FR_REPO}`
  * 获取博客列表
  * */
 export async function getPosts({ page = 1, pageSize = BLOG_PER_PAGE }) {
-  const res = await fetchWithToken(`${BLOG_PREFIX}/issues?state=open&page=${page}&per_page=${pageSize}`)
-  return res.map(formatPost)
+  try {
+    const res = await fetchWithToken(`${BLOG_PREFIX}/issues?state=open&page=${page}&per_page=${pageSize}`)
+    return Array.isArray(res) ? res.map(formatPost) : []
+  }
+  catch (error) {
+    console.error('Error fetching posts:', error)
+    return []
+  }
 }
 
 /*

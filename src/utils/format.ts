@@ -67,25 +67,54 @@ interface Post {
   comments_url: string
   created_at: string
   updated_at: string
-  labels: string[]
-  milestone: { name: string }
+  labels: {
+    id: number
+    name: string
+  }[]
+  milestone: {
+    id?: number
+    title?: string
+    name?: string
+  }
   summary: string
   body: string
   number: number
 }
-export function formatPost(post: Post) {
+export function formatPost(post: Post | null | undefined) {
+  if (!post) {
+    return {
+      id: 0,
+      times: 1,
+      title: '',
+      date: '',
+      updated: '',
+      comments: 0,
+      comments_url: '',
+      labels: [],
+      milestone: {
+        id: 0,
+        title: '',
+      },
+      summary: '',
+      body: '',
+      num: 0,
+    }
+  }
   const { id, title, comments, comments_url, created_at, updated_at, labels, body, milestone, number } = post
-  const obj = formatBody(body)
+  const obj = formatBody(body || '')
   return {
     id,
     times: 1,
-    title: obj.title || title,
+    title: obj.title || title || '',
     date: obj.date ? formatDate(obj.date) : formatDate(created_at),
     updated: obj.updated ? formatDate(obj.updated) : formatDate(updated_at),
     comments,
     comments_url,
-    labels,
-    milestone,
+    labels: labels || [],
+    milestone: {
+      id: milestone?.id || 0,
+      title: milestone?.title || milestone?.name || '',
+    },
     summary: obj.summary,
     body: obj.body,
     num: number,
