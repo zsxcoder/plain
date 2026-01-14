@@ -29,6 +29,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('./views/Search.vue'),
   },
   {
+    path: '/sponsor',
+    name: 'sponsor',
+    component: () => import('./views/Sponsor.vue'),
+  },
+  {
     path: '/post/:num',
     name: 'post',
     component: () => import('./views/Post.vue'),
