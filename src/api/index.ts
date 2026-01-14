@@ -106,18 +106,33 @@ export async function getTags() {
  * 获取关于页面
  * */
 export async function getAbout() {
-  const res = await fetchWithToken(`${BLOG_PREFIX}/issues?state=closed&labels=About`)
-  return res?.[0].body
+  try {
+    const res = await fetchWithToken(`${BLOG_PREFIX}/issues?state=closed&labels=About`)
+    return res?.[0]?.body || ''
+  }
+  catch (error) {
+    console.error('Error fetching about page:', error)
+    return ''
+  }
 }
 
 /*
  * 获取通知
  * */
 export async function getNotice() {
-  const res = await fetchWithToken(`${BLOG_PREFIX}/issues?state=closed&labels=Notice`)
-  return {
-    content: res?.[0].body,
-    color: `#${res?.[0].labels[0].color}`,
+  try {
+    const res = await fetchWithToken(`${BLOG_PREFIX}/issues?state=closed&labels=Notice`)
+    return {
+      content: res?.[0]?.body || '',
+      color: `#${res?.[0]?.labels?.[0]?.color || '333333'}`,
+    }
+  }
+  catch (error) {
+    console.error('Error fetching notice:', error)
+    return {
+      content: '',
+      color: '#333333',
+    }
   }
 }
 

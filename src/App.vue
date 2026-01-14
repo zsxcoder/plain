@@ -14,15 +14,10 @@ const noticeRef = ref<HTMLElement | null>(null)
 onMounted(async () => {
   try {
     notice.value = await getNotice()
-    const res = await fetch('https://api.ip.sb/geoip')
-    // const res = await fetch('https://api.ip.uicop.com/json') // info.data.ip
-    if (res.ok)
-      await res.json()
-      // 可以在这里使用 info.ip 做一些事情，比如记录日志
+    // 移除 IP 地址获取，避免网络请求错误
   }
   catch (error) {
-    console.error('Error occurs at get IP,', error)
-    return null
+    console.error('Error occurs in onMounted:', error)
   }
 })
 </script>
