@@ -96,17 +96,18 @@ export function isSpecificJSONFormat(str: string) {
         || typeof obj.url !== 'string'
         || typeof obj.avatar !== 'string'
         || typeof obj.desc !== 'string'
-        || typeof obj.tag !== 'object'
-        || obj.tag === null
       )
         return false
 
-      if (
-        typeof obj.tag.name !== 'string'
-        || typeof obj.tag.color !== 'string'
-        || typeof obj.tag.bg !== 'string'
-      )
-        return false
+      // 允许 tag 对象是可选的，或者 tag 对象中的属性是可选的
+      if (obj.tag && typeof obj.tag === 'object' && obj.tag !== null) {
+        if (obj.tag.name && typeof obj.tag.name !== 'string')
+          return false
+        if (obj.tag.color && typeof obj.tag.color !== 'string')
+          return false
+        if (obj.tag.bg && typeof obj.tag.bg !== 'string')
+          return false
+      }
 
       return true
     }
