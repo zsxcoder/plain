@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import Header from './components/Header.vue'
 import Copyright from './components/Copyright.vue'
 import BackToTop from './components/BackToTop.vue'
-import { getNotice, recordVisit } from './api'
+import { getNotice } from './api'
 
 const notice = ref({
   content: '',
@@ -12,28 +12,18 @@ const notice = ref({
 const noticeRef = ref<HTMLElement | null>(null)
 
 onMounted(async () => {
-  const referrer = document.createElement('a')
-  referrer.href = document.referrer
-  const hostname = (referrer.hostname
-    && (referrer.port !== '80' && referrer.port !== '443' && referrer.port !== ''))
-    ? `${referrer.hostname}:${referrer.port}`
-    : (referrer.hostname || '直接访问')
-  const ua = navigator.userAgent
-  let ip = '未知'
   try {
     notice.value = await getNotice()
     const res = await fetch('https://api.ip.sb/geoip')
     // const res = await fetch('https://api.ip.uicop.com/json') // info.data.ip
-    if (res.ok) {
-      const info = await res.json()
-      ip = info.ip
-    }
+    if (res.ok)
+      await res.json()
+      // 可以在这里使用 info.ip 做一些事情，比如记录日志
   }
   catch (error) {
     console.error('Error occurs at get IP,', error)
     return null
   }
-  await recordVisit({ referrer: hostname, ua, ip })
 })
 </script>
 

@@ -3,14 +3,11 @@ import './style.css'
 import 'virtual:uno.css'
 import '@unocss/reset/normalize.css'
 import { createPinia } from 'pinia'
-import AV from 'leancloud-storage'
 import directives from './directives/index'
 import App from './App.vue'
 import router from './router'
 import i18n from './locale'
 import './custom.css'
-import { createNotify } from './services/notifyService'
-import { useLeanCloudStore } from './stores/leanCloud'
 
 const pinia = createPinia()
 
@@ -21,20 +18,11 @@ app.use(directives)
   .use(i18n)
   .mount('#app')
 
-const { needLeanCloud } = useLeanCloudStore()
-
-// 初始化 LeanCloud
-if (needLeanCloud) {
-  AV.init({
-    appId: import.meta.env.V_LEANCLOUD_ID,
-    appKey: import.meta.env.V_LEANCLOUD_KEY,
-    serverURL: import.meta.env.V_LEANCLOUD_SERVER,
-  })
-}
-else {
-  createNotify({
-    message: 'LeanCloud 未正确配置，阅读量统计功能将无法正常使用',
-    type: 'error',
-    duration: 3000,
-  })
+// 添加 Vercount 脚本
+if (typeof window !== 'undefined') {
+  const script = document.createElement('script')
+  script.src = 'https://v1.vercount.one/p.js'
+  script.defer = true
+  script.dataset.vercount = 'true'
+  document.head.appendChild(script)
 }

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useInfiniteScroll } from '@vueuse/core'
-import { useLeanCloudStore } from '../stores/leanCloud'
 import { getCounter, getPosts } from '../api'
 import MarkdownIt from '../components/MarkdownIt.vue'
 import type { Post } from '../types/index'
@@ -9,8 +8,6 @@ import type { Post } from '../types/index'
 const posts: Post[] = reactive([])
 let curPage = 1 // 当前页码，不需要响应式
 const noMore = ref(false) // 没有更多文章，用于取消监听触底
-
-const { needLeanCloud } = useLeanCloudStore()
 
 /**
  * 获取更多文章
@@ -35,9 +32,7 @@ async function moreData(currentPage: number) {
 async function setPostTimes() {
   try {
     const ids = posts.map((post: Post) => post.id)
-    const times = (needLeanCloud && posts.length > 0)
-      ? await getCounter(ids) as { [key: string]: number }
-      : {}
+    const times = await getCounter(ids) as { [key: string]: number }
     if (times) {
       posts.forEach((post: Post) => {
         post.times = times[post.id] || 1
