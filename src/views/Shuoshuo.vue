@@ -117,7 +117,7 @@ onUnmounted(() => {
             </div>
           </div>
 
-          <div class="shuoshuo-content mb-4" v-html="item.text"></div>
+          <div class="shuoshuo-content mb-4" v-html="item.text" />
 
           <div v-if="item.image && item.image.length > 0" class="shuoshuo-images grid grid-cols-2 mb-4 gap-2">
             <div
